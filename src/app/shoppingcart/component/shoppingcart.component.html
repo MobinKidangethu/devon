@@ -1,0 +1,138 @@
+<!-- As a heading -->
+<nav class="navbar navbar-light bg-light leaseweb" style="
+background-color: white !important;
+box-shadow: 0px 1px 1px lightgray;">
+  <a class="navbar-brand" href="#">
+    <img src="../../../assets/img/new-logo.svg" width="auto" height="50" class="d-inline-block align-top" alt="">
+  </a>
+  </nav>
+  <div class="row">
+    <div class="col-3 filtersection">
+        <div class="filterarea">
+            <div class="filter">
+                <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Search server">
+            </div>
+            <hr class="my-4">
+            <div class="rangeSlider">
+                <label class="control-label" for="storage" >Storage in GB's</label>
+                <ng5-slider [(value)]="options.floor" [(highValue)]="options.ceil" [(options)]="options"></ng5-slider>
+              </div>
+              <hr class="my-4">
+             
+            <div id="accordion">
+              <label class="control-label" for="hardDisk" >RAM</label>
+
+            <div class="card">
+
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <div class="btn" data-toggle="collapse" disabled data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Please select the RAM size
+                    </div>
+                  </h5>
+                </div>
+            
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="form-check" *ngFor="let servers of ramlist">
+                        <input class="form-check-input" type="checkbox" value="{{servers.rammemory}}" id="defaultCheck1" 
+                        (change)="OnCheckboxSelect($event)"                        >
+                        <label class="form-check-label" for="defaultCheck1">
+                         {{servers.memory}}
+                        </label>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4">
+
+            <div class="hardDisk Drpdwn">
+                <label class="control-label" for="hardDisk" >Hard Disk</label>
+                <div class=""  >
+                  <select id="company" (change)="gethddValue($event.target.value)" class="form-control">
+                    <option value="" selected disabled>Please select</option>
+                    <option *ngFor="let servers of hddlist">{{servers.hddtype}}</option>           
+                  </select> 
+                </div>
+              </div>
+              <hr class="my-4">
+
+              <div>
+                <button type="button" class="btn btn-primary"  (click)="applyfilter()" >Apply</button>
+                <button style="margin-left: 10px;" type="button" class="btn btn-primary"  (click)="reset()" >Reset</button>
+
+              </div>
+        </div>
+    </div>
+    <div class="col-9 serversection">
+        <div class="container">
+            <div class="row">
+                <div class="col-1" >
+                    <span style="padding: 13px;" class="badge badge-primary">{{totalservers}}</span>
+                </div>
+                <div class="col-11">
+                    <ngb-pagination [pageSize] = "20" [collectionSize]="totalservers" [(page)]="page" 
+                [ellipses]="false" [rotate]="true" [boundaryLinks]="true" [maxSize]="5"></ngb-pagination> 
+                </div>
+                
+            </div>
+            
+        <div class="row product-list">
+    
+          <!-- START : Product Card -->
+          <div class="col-sm-12 col-md-6 col-lg-3 product-list__item" 
+          *ngFor="let servers of serverlist | filter:searchText | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+            <div class="card mb-4 shadow-sm pd-5">
+              <div class="product-list__image">
+               <img class="card-img-top" src="../../../assets/img/ico-servers.png"  alt="Card image cap">
+              </div>
+    
+              <div class="card-body">
+                <h4>{{servers.model}}</h4>
+                <p class="card-text">{{servers.memory}} | {{servers.ramtype}} | {{servers.hddmemory}} | {{servers.hddtype}}</p>
+                <p class="card-text">{{servers.price}}</p>
+                  <!-- <div class="text-center">
+                    <button type="button" class="btn btn-primary" (click)="addToCart()">Add To Cart</button>
+                  </div> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12" *ngIf="totalservers == 0">
+            Applied filter doesn't have any data
+          </div> 
+          <!-- END : Product Card -->
+    
+        </div>
+</div>
+
+<div #myModel class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-header">
+        <h5 class="modal-title ">Title</h5>
+        <button type="button" class="close" (click)="closeModel()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+        
+
+      
+
+      <!-- <div class="form-group">
+        <label for="exampleFormControlSelect2">Example multiple select</label>
+        <select multiple  class="form-control" id="exampleFormControlSelect2">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <option *ngFor="let servers of ramlist">{{servers.memory}}</option>
+        </select>
+      </div> -->
+    
+      
+             
+    
